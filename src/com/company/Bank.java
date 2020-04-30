@@ -16,29 +16,184 @@ public class Bank {
     public ArrayList<User> users = new ArrayList<User>();
 
     private String bankName="";
-    private int usersNumber= getUsers().size();
+    private int usersNumber= 0;
     private int accountsNumber = 0;
 
     public void listAllUserName(){
-        for (int i=0; i<=usersNumber; i++) {
-            System.out.println(users.get(i).getUserName());
+        for (int i=0; i<=this.getUsersNumber(); i++) {
+            System.out.println(this.getUsers().get(i).getUserName());
+            // egy pillanat, lemerult a fules
+            // azt mondom hogy lehet aludni kell rá egyet, mert nagyon jól haladunk és már cska simitások vannak
+            // feltöltjük a gitbe most az egészet
+            // hogy el ne vesszen, mert ha ezt megoldjuk aztuán már csak apró simítások és kész a projekt amit akartunk cska gui nélkül :D
         }
     }
 
-    public void listAllUserData(){
-        for (int i=0; i<=this.getUsersNumber()-1; i++){ // a j nel akadt el -  felment ketoig
-            System.out.print(this.users.get(i).getUserName() + " aki, a(z) " +
-                    this.users.get(i).getUserId() + ". felhasználó, született ");
-            this.users.get(i).writeUserBirthInformation();
-            System.out.println(" "+this.users.get(i).getUserAccountsNumber()+" folyószámlával rendelkezik.");
-            for (int j=0; j<=this.users.get(i).getUserAccountsNumber()-1; j++){
-               System.out.println((j+1)+". számla: " + this.getUsers().get(0).getUserAccounts().get(j).getAccountBalance());
 
+    public void updateMemoryFromDataBase(String _corePath, String _accountsPath, String _usersPath, String _temporaryPath) {
+        try{
+
+            File corefile = new File("banksy.txt");
+            File accountsfile = new File("banksy_accounts.txt");
+            File usersfile = new File("banksy_users.txt");
+            File temporaryFile = new File("temporary.txt");
+
+            //write
+            // core a végén
+            BufferedWriter writeAccount = new BufferedWriter(new FileWriter(accountsfile.getAbsoluteFile(),true));
+            BufferedWriter writeUsers = new BufferedWriter(new FileWriter(usersfile.getAbsoluteFile(),true));
+            BufferedWriter writeTemporary = new BufferedWriter(new FileWriter(temporaryFile.getAbsoluteFile()));
+
+            //read
+
+            BufferedReader readCore = new BufferedReader(new FileReader(corefile.getAbsoluteFile()));
+            BufferedReader readAccounts = new BufferedReader(new FileReader(accountsfile.getAbsoluteFile()));
+            BufferedReader readUsers = new BufferedReader(new FileReader(usersfile.getAbsoluteFile()));
+            BufferedReader readTemporary = new BufferedReader(new FileReader(temporaryFile.getAbsoluteFile()));
+
+
+            // update
+
+            // LOG:TYPE USER1 USER1ACCOUMT1 USER2 USER2ACCOUNT1 USER1ACCOUNT1BALDIFF USER2ACCUNT1BALDIFF VALUTA  (utalás kati 1. folyójáról józsi 1. folyósára -3000 3000 HUF
+            // USER : ID Vezeteknev Keresztnev jelszo yyyy m dd where
+            // ACCOUNT: ID USERID Katica Csenge folyoszamlajelszo balance valuta
+            // BANK: 0 <-- user
+            //       0 <-- account
+
+            this.setUsersNumber(Integer.parseInt(readCore.readLine()));
+            this.setAccountsNumber(Integer.parseInt(readCore.readLine()));
+
+            String[][] accountslist = new String[][]{};
+
+            for(int i=0; i<this.getAccountsNumber(); i++){
+                String accountData = readAccounts.readLine();
+                accountslist[i] = accountData.split("\\s+");
             }
 
+            for(int i=0; i<this.getUsersNumber(); i++){
+
+                // user
+                String userData = readUsers.readLine(); // itt ugrani fog a kovi cikluusban
+                String[] splittedUserData = userData.split("\\s+"); // ezt hogy szeretned?
+
+                int _id = Integer.parseInt(splittedUserData[0]);
+                String _name = splittedUserData[1]+" "+splittedUserData[2];
+                String _password = splittedUserData[3];
+                String _year = splittedUserData[4];
+                String _mounth = splittedUserData[5];
+                String _day = splittedUserData[6];
+                String _where = splittedUserData[7];
+                int _accountsnumber = Integer.parseInt(splittedUserData[8]);
+
+
+                User fromdb = new User(_id,_name,_password,_year,_mounth,_day,_where);
+                fromdb.setUserAccountsNumber(_accountsnumber);
+
+
+
+                for (int j = 0; j<this.getAccountsNumber(); i++) {// Account egyelore nem lattam hibasnak tuno reszt, nagyon kiraly :)
+                    if(!(fromdb.getUserAccountsNumber()==fromdb.getUserAccounts().size())){ // gondolkozok rajta :D
+                        if(Integer.parseInt(accountslist[j][1])==fromdb.getUserId()) {
+
+                            // ACCOUNT: ID USERID Katica Csenge folyoszamlajelszo balance valuta
+
+                            int _accountId = Integer.parseInt(accountslist[j][0]);
+                            int _ownerId = Integer.parseInt(accountslist[j][1]);
+                            String _ownername = accountslist[j][2] + " " + accountslist[j][3];
+                            String _accountpassword = accountslist[j][4];
+                            int _balance = Integer.parseInt(accountslist[j][5]);
+                            String _valuta = accountslist[j][6];
+
+
+                            Account fromdbAccount = new Account(_accountId, _ownerId, _ownername, _accountpassword, _balance, _valuta);
+                            fromdb.getUserAccounts().add(fromdbAccount);
+                        }
+                    }
+
+                    this.getUsers().add(fromdb);
+                }
+                this.getUsers().add(fromdb);
+            }
+
+
+            // Banksy txt megnyitása és az a kemény két sor kiolvasása
+
+
+
+
+
+            // legvégén kell lennie mert ebben összesítés van, és mindig törli az előzőt
+            BufferedWriter writeCore = new BufferedWriter(new FileWriter(accountsfile.getAbsoluteFile()));
+
+
+            readCore.close();
+            readAccounts.close();
+            readUsers.close();
+            readTemporary.close();
+
+            writeCore.close();
+            writeAccount.close();
+            writeUsers.close();
+            writeTemporary.close();
+
+
+        }catch(Exception e){
+
         }
+
     }
 
+    public void updateDataBaseFromMemory(String _corePath, String _accountsPath, String _usersPath, String _temporaryPath) {
+        try{
+
+            File corefile = new File("banksy.txt");
+            File accountsfile = new File("banksy_accounts.txt");
+            File usersfile = new File("banksy_users.txt");
+            File temporaryFile = new File("temporary.txt");
+
+            //write
+            // core a végén
+            BufferedWriter writeAccount = new BufferedWriter(new FileWriter(accountsfile.getAbsoluteFile(),true));
+            BufferedWriter writeUsers = new BufferedWriter(new FileWriter(usersfile.getAbsoluteFile(),true));
+            BufferedWriter writeTemporary = new BufferedWriter(new FileWriter(temporaryFile.getAbsoluteFile()));
+
+            //read
+
+            BufferedReader readCore = new BufferedReader(new FileReader(corefile.getAbsoluteFile()));
+            BufferedReader readAccounts = new BufferedReader(new FileReader(accountsfile.getAbsoluteFile()));
+            BufferedReader readUsers = new BufferedReader(new FileReader(usersfile.getAbsoluteFile()));
+            BufferedReader readTemporary = new BufferedReader(new FileReader(temporaryFile.getAbsoluteFile()));
+
+
+            // update
+
+            // Melyik fuggvenyhivas teszi el a usereket? -- ami mondjuk az elobb kijott itt
+
+
+
+
+
+
+            // legvégén kell lennie mert ebben összesítés van, és mindig törli az előzőt
+            BufferedWriter writeCore = new BufferedWriter(new FileWriter(accountsfile.getAbsoluteFile()));
+
+
+            readCore.close();
+            readAccounts.close();
+            readUsers.close();
+            readTemporary.close();
+
+            writeCore.close();
+            writeAccount.close();
+            writeUsers.close();
+            writeTemporary.close();
+
+
+        }catch(Exception e){
+
+        }
+
+    }
 
     public void createNewUser(){
 
@@ -56,7 +211,8 @@ public class Bank {
 
             FileWriter wAccounts = new FileWriter(accountsfile.getAbsoluteFile(),true);
             FileWriter wUsers = new FileWriter(usersfile.getAbsoluteFile(),true);
-
+            FileWriter wTemporary = new FileWriter(temporaryFile.getAbsoluteFile());
+            // Eloszor megirjuk a frissito interface-t, vagy csinaljuk meg a logikat?
 
             BufferedWriter writeAccount = new BufferedWriter(wAccounts);
             BufferedWriter writeUsers = new BufferedWriter(wUsers);
@@ -102,13 +258,17 @@ public class Bank {
             String w = in.next();
 
         String name = forname+" "+surename;
-        this.addUsersNumber(1); // mintha lett volna benne vmi kodformazo funkci
+        this.addUsersNumber(1); // mintha lett volna benne vmi kodformazo funkci - ez noveli, igaz?
 
         System.out.println("newusersnumber: " + this.getUsersNumber());
 
 
+        // A get users numbert is, a banksy_users.txt hosszaval
         User newUser = new User(this.getUsersNumber(),name,pass,y,m,d,w);
         this.getUsers().add(newUser);
+
+        // Egyszer azt a ket sort ki lehetne szedni, majd valahogyan a folyoszamlat is be kell tolteni a felhasznaloknak
+            // marmint a memoria feltolteskor
 
         newUser.createNewAccount(this.getAccountsNumber());
 
@@ -164,7 +324,7 @@ public class Bank {
         System.out.println("Jelszó: ");
         String pass = input.next();
 
-        if(this.getUsers().get(loginId-1).getUserPassword().equals(pass)){
+        if(this.getUsers().get(loginId).getUserPassword().equals(pass)){
             userInterface(this.getUsers().get(loginId-1));
         }
 

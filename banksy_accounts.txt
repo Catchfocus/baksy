@@ -1,0 +1,10 @@
+1 7 Katica Csenge 4125123 30000 HUF
+2 7 Katica Csenge 211f23f23 0 HUF
+3 1 12313 123 123124 0 HUF
+4 6 Kukaorica Janos janos32 40000000 HUF
+5 5 Kovacs Istva'n 1234 10 HUF
+6 2 dwq dwq dwq -200 HUF
+7 3 dwq dwq dwq -400 HUF
+8 4 Futó Mirkó 12345 999999999 HUF
+
+
