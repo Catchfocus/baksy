@@ -35,7 +35,7 @@ public class User{
 
 
 
-    public void createNewAccount(){
+    public void createNewAccount(int accountsNumber){
         Scanner input = new Scanner(System.in);
         this.addUserAccountsNumber(1);
         System.out.println("Folyószámla jelszó: ");

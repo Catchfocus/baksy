@@ -46,60 +46,78 @@ public class Bank {
 
         Scanner in = new Scanner(System.in);
 
-            File file = new File("banksy_database.txt");
-            FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            BufferedReader br = new BufferedReader(new FileReader("banksy_database.txt"));
+            File corefile = new File("banksy.txt");
+            File accountsfile = new File("banksy_accounts.txt");
+            File usersfile = new File("banksy_users.txt");
+            File temporaryFile = new File("temporary.txt");
 
-            String line = (String)(this.getUsersNumber()+" "+this.getAccountsNumber()); // szerintem leallitottam az elot 0 0
-
-            String[] bankusersandaccounts = new String[]{"0","0"};
-            String firstLine = br.readLine(); // ez az elso sor, hmm nem tudom
-            //System.out.println(firstLine);
+            //write
 
 
-
-            System.out.println(firstLine.contains(line)); // 0 0 vs 1 asd asd asd asd asd asd 1
-
-            while(firstLine.contains(line)){
-                 bankusersandaccounts = firstLine.split("\\s+");
-
-                 firstLine = (br.readLine() != null) ? br.readLine() : ""; // de az a baj, hogy ugyis beszivja a NULLt
-
-                System.out.println("match");
-            } // pont rosszul mondtam. vagyis, azt nem tudom h miert nem lep ki
+            FileWriter wAccounts = new FileWriter(accountsfile.getAbsoluteFile(),true);
+            FileWriter wUsers = new FileWriter(usersfile.getAbsoluteFile(),true);
 
 
-            this.setUsersNumber(Integer.parseInt(bankusersandaccounts[0]));
-            this.setAccountsNumber(Integer.parseInt(bankusersandaccounts[1]));
+            BufferedWriter writeAccount = new BufferedWriter(wAccounts);
+            BufferedWriter writeUsers = new BufferedWriter(wUsers);
+
+            //read
+
+            FileReader rCore = new FileReader(corefile.getAbsoluteFile());
+            FileReader rAccounts = new FileReader(accountsfile.getAbsoluteFile());
+            FileReader rUsers = new FileReader(usersfile.getAbsoluteFile());
+
+            BufferedReader readCore = new BufferedReader(rCore);
+            BufferedReader readAccounts = new BufferedReader(rAccounts);
+            BufferedReader readUsers = new BufferedReader(rUsers);
+
+
+
+            String usersNumberFromFile = readCore.readLine();
+
+            System.out.println("usersnumberfromfile: " + usersNumberFromFile);
+
+            String accountsNumberFromFile = readCore.readLine();
+            System.out.println("accountsnumberfromfile: " + accountsNumberFromFile);
+
+            this.setUsersNumber(Integer.parseInt(usersNumberFromFile));
+            this.setAccountsNumber(Integer.parseInt(accountsNumberFromFile));
+
+            System.out.println("Users and account: " + this.getUsersNumber()+ " "+ this.getAccountsNumber());
 
             System.out.println("Család neved: ");
-        String forname = in.next();
-        System.out.println("Kereszt neved: ");
-        String surename = in.next();
-        System.out.println("Jelszó: ");
-        String pass = in.next();
-        System.out.println("Mikor és hol születtél?\n");
-        System.out.println("Év: ");
-        String y = in.next();
-        System.out.println("Hónap: ");
-        String m = in.next();
-        System.out.println("Nap: ");
-        String d = in.next();
-        System.out.println("Hely: ");
-        String w = in.next();
+            String forname = in.next();
+            System.out.println("Kereszt neved: ");
+            String surename = in.next();
+            System.out.println("Jelszó: ");
+            String pass = in.next();
+            System.out.println("Mikor és hol születtél?\n");
+            System.out.println("Év: ");
+            String y = in.next();
+            System.out.println("Hónap: ");
+            String m = in.next();
+            System.out.println("Nap: ");
+            String d = in.next();
+            System.out.println("Hely: ");
+            String w = in.next();
 
         String name = forname+" "+surename;
-        this.addUsersNumber(1);
+        this.addUsersNumber(1); // mintha lett volna benne vmi kodformazo funkci
+
+        System.out.println("newusersnumber: " + this.getUsersNumber());
+
+
         User newUser = new User(this.getUsersNumber(),name,pass,y,m,d,w);
         this.getUsers().add(newUser);
 
-        newUser.createNewAccount();
-
-        this.addUsersNumber(newUser.getUserAccountsNumber());
+        newUser.createNewAccount(this.getAccountsNumber());
 
 
-            String content =
+        this.addAccountsNumber(newUser.getUserAccountsNumber());
+
+        System.out.println("Accounts: " + this.getAccountsNumber());
+
+            String userData =
                     String.format("%d %s %s %s %s %s %d",
                             newUser.getUserId(),
                             newUser.getUserName(),
@@ -109,23 +127,29 @@ public class Bank {
                             newUser.getUserBirthInformation()[2],
                             newUser.getUserAccountsNumber());
 
-            bw.write(content);
-            bw.newLine();
-            bw.close();
-            // nem tudom
+            System.out.println(userData);
 
-            BufferedWriter bwnew = new BufferedWriter(new FileWriter("banksy_database.txt", false));
-            //bw.write((String)(this.getUsersNumber()+" "+this.getAccountsNumber())); // kipro oh nem
-            bwnew.write((String)(this.getUsersNumber()+" "+this.getAccountsNumber()));
-            //bwnew.write(content); -- firstline + all_content, else it overwrites
+            writeUsers.write(userData);
 
-            bwnew.newLine();
-            bwnew.write(content);
-            //bwnew.newLine(); // probaltam atgondolni, de azt kene, hogy mindent ami nem az elso sor
-            // osszegyujteni, es ciklussal kitologatni ujra igen. En is akarok, szoval okes. :D jo
 
-            br.close(); // ohh most meg talan a ping is jobb lett
-            bwnew.close();
+            writeUsers.newLine();
+
+            String usersNumberToCore = Integer.toString(this.getUsersNumber());
+            String accountsNumberToCore = Integer.toString(this.getAccountsNumber());
+
+            FileWriter wCore = new FileWriter(corefile.getAbsoluteFile());
+            BufferedWriter writeCore = new BufferedWriter(wCore);
+
+            writeCore.flush();
+            writeCore.write(usersNumberToCore);
+            writeCore.newLine();
+            writeCore.write(accountsNumberToCore);
+            writeCore.newLine();
+
+            writeCore.close();
+            writeAccount.close();
+            writeUsers.close();
+
         }
         catch(IOException e){
             System.out.println("Hiba történt az adatbázis elérése közben.");
