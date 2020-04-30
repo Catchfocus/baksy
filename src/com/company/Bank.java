@@ -22,10 +22,6 @@ public class Bank {
     public void listAllUserName(){
         for (int i=0; i<=this.getUsersNumber(); i++) {
             System.out.println(this.getUsers().get(i).getUserName());
-            // egy pillanat, lemerult a fules
-            // azt mondom hogy lehet aludni kell rá egyet, mert nagyon jól haladunk és már cska simitások vannak
-            // feltöltjük a gitbe most az egészet
-            // hogy el ne vesszen, mert ha ezt megoldjuk aztuán már csak apró simítások és kész a projekt amit akartunk cska gui nélkül :D
         }
     }
 

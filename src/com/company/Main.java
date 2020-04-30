@@ -44,7 +44,7 @@ public class Main {
 
                 default: System.out.println("Nem értelmezhető input. Kérlek próbáld újra!");
 
-            } // En is kezkek mar faramsdkdalsk
+            }
         }
 
     }
