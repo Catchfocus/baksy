@@ -52,7 +52,7 @@ public class Main {
         Bank Banksy = new Bank("Banksy");
 
 
-        createWriteStream(new String[]{"1", "2"},"banksy_database.txt");
+      //  createWriteStream(new String[]{"1", "2"},"banksy_database.txt");
 
         String[] data = createReadStream("banksy_database.txt");
         for (int i = 0; i< data.length; i++) {

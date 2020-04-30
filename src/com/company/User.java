@@ -37,7 +37,7 @@ public class User{
 
     public void createNewAccount(){
         Scanner input = new Scanner(System.in);
-        this.setUserAccountsNumber();
+        this.addUserAccountsNumber(1);
         System.out.println("Folyószámla jelszó: ");
         String pass = input.next();
         Account defaultNewAccount = new Account(this.getUserAccountsNumber(), this.getUserName(),pass,0);
@@ -85,8 +85,12 @@ public class User{
         this.userName = userName;
     }
 
-    public void setUserAccountsNumber() {
-        this.userAccountsNumber++;
+    public void addUserAccountsNumber(int n) {
+        this.userAccountsNumber +=n;
+    }
+
+    public void setUserAccountsNumber(int userAccountsNumber) {
+        this.userAccountsNumber = userAccountsNumber;
     }
 
     public void setUserBirthInformation(String[] userBirthInformation) {

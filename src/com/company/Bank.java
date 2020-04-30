@@ -1,5 +1,6 @@
 package com.company;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,7 +16,7 @@ public class Bank {
     public ArrayList<User> users = new ArrayList<User>();
 
     private String bankName="";
-    private int usersNumber= users.size();
+    private int usersNumber= getUsers().size();
     private int accountsNumber = 0;
 
     public void listAllUserName(){
@@ -40,9 +41,39 @@ public class Bank {
 
 
     public void createNewUser(){
+
+        try {
+
         Scanner in = new Scanner(System.in);
 
-        System.out.println("Család neved: ");
+            File file = new File("banksy_database.txt");
+            FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            BufferedReader br = new BufferedReader(new FileReader("banksy_database.txt"));
+
+            String line = (String)(this.getUsersNumber()+" "+this.getAccountsNumber()); // szerintem leallitottam az elot 0 0
+
+            String[] bankusersandaccounts = new String[]{"0","0"};
+            String firstLine = br.readLine(); // ez az elso sor, hmm nem tudom
+            //System.out.println(firstLine);
+
+
+
+            System.out.println(firstLine.contains(line)); // 0 0 vs 1 asd asd asd asd asd asd 1
+
+            while(firstLine.contains(line)){
+                 bankusersandaccounts = firstLine.split("\\s+");
+
+                 firstLine = (br.readLine() != null) ? br.readLine() : ""; // de az a baj, hogy ugyis beszivja a NULLt
+
+                System.out.println("match");
+            } // pont rosszul mondtam. vagyis, azt nem tudom h miert nem lep ki
+
+
+            this.setUsersNumber(Integer.parseInt(bankusersandaccounts[0]));
+            this.setAccountsNumber(Integer.parseInt(bankusersandaccounts[1]));
+
+            System.out.println("Család neved: ");
         String forname = in.next();
         System.out.println("Kereszt neved: ");
         String surename = in.next();
@@ -59,11 +90,46 @@ public class Bank {
         String w = in.next();
 
         String name = forname+" "+surename;
-        this.setUsersNumber();
+        this.addUsersNumber(1);
         User newUser = new User(this.getUsersNumber(),name,pass,y,m,d,w);
         this.getUsers().add(newUser);
 
         newUser.createNewAccount();
+
+        this.addUsersNumber(newUser.getUserAccountsNumber());
+
+
+            String content =
+                    String.format("%d %s %s %s %s %s %d",
+                            newUser.getUserId(),
+                            newUser.getUserName(),
+                            newUser.getUserPassword(),
+                            newUser.getUserBirthInformation()[0],
+                            newUser.getUserBirthInformation()[1],
+                            newUser.getUserBirthInformation()[2],
+                            newUser.getUserAccountsNumber());
+
+            bw.write(content);
+            bw.newLine();
+            bw.close();
+            // nem tudom
+
+            BufferedWriter bwnew = new BufferedWriter(new FileWriter("banksy_database.txt", false));
+            //bw.write((String)(this.getUsersNumber()+" "+this.getAccountsNumber())); // kipro oh nem
+            bwnew.write((String)(this.getUsersNumber()+" "+this.getAccountsNumber()));
+            //bwnew.write(content); -- firstline + all_content, else it overwrites
+
+            bwnew.newLine();
+            bwnew.write(content);
+            //bwnew.newLine(); // probaltam atgondolni, de azt kene, hogy mindent ami nem az elso sor
+            // osszegyujteni, es ciklussal kitologatni ujra igen. En is akarok, szoval okes. :D jo
+
+            br.close(); // ohh most meg talan a ping is jobb lett
+            bwnew.close();
+        }
+        catch(IOException e){
+            System.out.println("Hiba történt az adatbázis elérése közben.");
+        }
 
     }
 
@@ -117,6 +183,10 @@ public class Bank {
 
     //setter
 
+    public void addAccountsNumber(int n){
+        this.accountsNumber+=n;
+    }
+
     public void setAccountsNumber(int accountsNumber) {
         this.accountsNumber = accountsNumber;
     }
@@ -129,8 +199,12 @@ public class Bank {
         this.users = users;
     }
 
-    public void setUsersNumber() {
-        this.usersNumber += 1;
+    public void addUsersNumber(int n) {
+        this.usersNumber += n;
+    }
+
+    public void setUsersNumber(int usersNumber) {
+        this.usersNumber = usersNumber;
     }
     //getter
 

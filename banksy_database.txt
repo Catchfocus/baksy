@@ -1,8 +1,2 @@
-1 Futó Mirkó 1997 8 15 Baja *1
-2 Zeisler Milán 1999 1 21 Szeged *1
-3 Bakos Bence 1999 5 2 Szeged *1
-4 Balázs Máté 1997 1 4 Szeged *1
-1 2
-1 2
-1 2
-1 2
+2 0
+test
