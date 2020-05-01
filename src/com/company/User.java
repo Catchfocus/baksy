@@ -36,14 +36,7 @@ public class User{
 
 
     public void createNewAccount(int accountsNumber){
-        Scanner input = new Scanner(System.in);
-        this.addUserAccountsNumber(1);
-        System.out.print("Folyószámla jelszó: ");
-        String pass = input.next();
-        System.out.print("Nyitó valuta: ");
-        String valuta = input.next();
-        Account defaultNewAccount = new Account(this.getUserAccountsNumber(),this.getUserId(), this.getUserName(),pass,0,valuta);
-        this.getUserAccounts().add(defaultNewAccount);
+
     }
 
     //getter

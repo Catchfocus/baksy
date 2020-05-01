@@ -2,14 +2,14 @@ package com.company;
 
 public class Account {
 
-    public Account(int _accountID, int _ownerId, String _accountOwner, String _accountPassword, int _accountBalance, String _accountValuta) {
+    public Account(int _accountID, int _ownerId, String _accountOwner, String _accountPassword, int _accountBalance, String _account, String _accountCurrency) {
 
         this.setAccountId(_accountID);
         this.setOwnerId(_ownerId);
         this.setAccountOwner(_accountOwner);
         this.setAccountPassword(_accountPassword);
         this.setAccountBalance(_accountBalance);
-        this.setAccountValuta(_accountValuta);
+        this.setAccountCurrency(_accountCurrency);
 
         System.out.println("Account létrehozva: " + "\n  ID: " + this.getAccountId() + "\n   Owner: " + this.getAccountOwner() + "\n    Password: " + this.getAccountPassword() + "\n   Egyenleg: " + this.getAccountBalance());
 
@@ -20,8 +20,10 @@ public class Account {
     private String accountOwner="";
     private String accountPassword="";
     private int accountBalance = 0;
-    private String accountValuta = "";
+    private String accountCurrency = "";
     private int ownerId = 0;
+
+
 
     //getter
 
@@ -46,8 +48,8 @@ public class Account {
         return accountBalance;
     }
 
-    public String getAccountValuta() {
-        return accountValuta;
+    public String getAccountCurrency() {
+        return accountCurrency;
     }
 
     //setter
@@ -57,8 +59,8 @@ public class Account {
         this.ownerId = ownerId;
     }
 
-    public void setAccountValuta(String accountValuta) {
-        this.accountValuta = accountValuta;
+    public void setAccountCurrency(String accountCurrency) {
+        this.accountCurrency = accountCurrency;
     }
 
 

@@ -31,9 +31,9 @@ public class Main {
             separator();
             System.out.println("Kérlek válassz az alábbi lehetőségek közül");
             separator();
-            System.out.println("\t1 - Új felhasználó regisztráció\n\t2 - Bejelentkezés a fiókba\n\t3 - Összes felhasználó neve");
+            System.out.println("\t1 - Új felhasználó regisztráció\n\t2 - Bejelentkezés a fiókba\n\t3 - Összes felhasználó neve\n\t4 - Leállítás");
 
-            System.out.println("\nUsers number from memory after clone from db:" + Banksy.getUsers().size());
+            System.out.println("\nUsers number from memory after clone from db:" + Banksy.getUsersNumber());
 
             Scanner input = new Scanner(System.in);
             userchoice = input.nextInt();
@@ -45,8 +45,8 @@ public class Main {
 
                 case 2: separator(); System.out.println("Ez még nincs kész sicc");  separator(); break;
                 case 3: separator(); System.out.println("Az összes felhasználó neve");  Banksy.listAllUserName(); separator(); break;
-
-                default: System.out.println("Nem értelmezhető input. Kérlek próbáld újra!");
+                case 4: separator(); System.out.println("LEÁLLÍTÁS...."); running=false; break;
+                default: System.out.println("Nem értelmezhető input. Kérlek próbáld újra!"); break;
 
             }
             // update database from memory

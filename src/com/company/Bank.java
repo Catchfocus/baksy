@@ -211,10 +211,15 @@ public class Bank {
                 String _accountnumber = String.valueOf(this.getUsers().get(i).getUserAccountsNumber());
 
                 String line = String.join(" ",_id,_name,_password,_year,_mounth,_day,_where,_accountnumber);
+                String readedLine = readUsers.readLine();
 
-                if(!(line.equals(readUsers.readLine()))){
+                if(!line.contains(readedLine)){
+                    writeUsers.newLine();
                     writeUsers.write(line);
+
                 }
+
+
             }
 
 
