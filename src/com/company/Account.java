@@ -10,10 +10,6 @@ public class Account {
         this.setAccountPassword(_accountPassword);
         this.setAccountBalance(_accountBalance);
         this.setAccountCurrency(_accountCurrency);
-
-        System.out.println("Account létrehozva: " + "\n  ID: " + this.getAccountId() + "\n   Owner: " + this.getAccountOwner() + "\n    Password: " + this.getAccountPassword() + "\n   Egyenleg: " + this.getAccountBalance());
-
-
     }
 
     private int accountId = 0;

@@ -96,12 +96,10 @@ public class Bank {
                 String _day = splittedUserData[6];
                 String _where = splittedUserData[7];
                 int _accountsnumber = Integer.parseInt(splittedUserData[8]);
-                System.out.println("_accountsnumber: " + _accountsnumber);
 
 
 
-                User fromdb = new User(_id,_name,_password,_year,_mounth,_day,_where);
-                fromdb.setUserAccountsNumber(_accountsnumber);
+                User fromdb = new User(_id,_name,_password,_year,_mounth,_day,_where,_accountsnumber);
 
 
                 String[] accounts = new String[]{};
@@ -251,7 +249,7 @@ public class Bank {
             writeUsers.close();
             writeTemporary.close();
 
-            this.getUsers().clear();
+            this.getUsers().removeAll(this.getUsers());
             this.setAccountsNumber(0);
             this.setUsersNumber(0);
 
@@ -298,15 +296,12 @@ public class Bank {
 
             String usersNumberFromFile = readCore.readLine();
 
-            System.out.println("usersnumberfromfile: " + usersNumberFromFile);
 
             String accountsNumberFromFile = readCore.readLine();
-            System.out.println("accountsnumberfromfile: " + accountsNumberFromFile);
 
             this.setUsersNumber(Integer.parseInt(usersNumberFromFile));
             this.setAccountsNumber(Integer.parseInt(accountsNumberFromFile));
 
-            System.out.println("Users and account: " + this.getUsersNumber()+ " "+ this.getAccountsNumber());
 
             System.out.println("Család neved: ");
             String forname = in.next();
@@ -327,22 +322,17 @@ public class Bank {
         String name = forname+" "+surename;
         this.addUsersNumber(1); // mintha lett volna benne vmi kodformazo funkci - ez noveli, igaz?
 
-        System.out.println("newusersnumber: " + this.getUsersNumber());
+
 
 
         // A get users numbert is, a banksy_users.txt hosszaval
-        User newUser = new User(this.getUsersNumber(),name,pass,y,m,d,w);
+        User newUser = new User(this.getUsersNumber(),name,pass,y,m,d,w,0);
         this.getUsers().add(newUser);
 
-        // Egyszer azt a ket sort ki lehetne szedni, majd valahogyan a folyoszamlat is be kell tolteni a felhasznaloknak
-            // marmint a memoria feltolteskor
-
         newUser.createNewAccount(this.getAccountsNumber());
+        this.addAccountsNumber(1);
 
 
-        this.addAccountsNumber(newUser.getUserAccountsNumber());
-
-        System.out.println("Accounts: " + this.getAccountsNumber());
 
             String userData =
                     String.format("%d %s %s %s %s %s %s %d",
@@ -355,7 +345,7 @@ public class Bank {
                             newUser.getUserBirthInformation()[3],
                             newUser.getUserAccountsNumber());
 
-            System.out.println(userData);
+
 
             writeUsers.write(userData);
 
@@ -385,51 +375,11 @@ public class Bank {
 
     }
 
-    public void login(){
-        Scanner input = new Scanner(System.in);
-        System.out.println("ID: ");
-        int loginId= input.nextInt();
-        System.out.println("Jelszó: ");
-        String pass = input.next();
-
-        if(this.getUsers().get(loginId).getUserPassword().equals(pass)){
-            userInterface(this.getUsers().get(loginId-1));
-        }
+    public void logIn(){
 
     }
 
     public void userInterface(User _user){
-        System.out.println("Folyószámlák listázása: ");
-
-        for (int i = 0; i<=_user.getUserAccountsNumber()-1; i++) {
-            System.out.println(_user.getUserAccounts().get(i).getAccountId() + ". folyoszamla adatai: ");
-            System.out.println("Azonosito: " + _user.getUserAccounts().get(i).getAccountId());
-            System.out.println("Egyenleg: " + _user.getUserAccounts().get(i).getAccountBalance() + " Ft ");
-            System.out.println("_ _ _");// es akkor igy az ossyeg jon ki az adott fszamhoz
-        }
-
-        // Folyoszamla navigaciok
-        Scanner in = new Scanner(System.in);
-
-        System.out.println("Melyik folyoszamlan szeretne valtoztatasokat vegrehajtani? Irja be az azonositot.");
-        int azonosito = in.nextInt();
-        System.out.println("Lehetosegek: 1. Penz feltoltese \n 2. Penz utalasa/kuldese \n 3. Pezz kivetele");
-        int action = in.nextInt();
-
-        switch (action) {
-            case 1:
-                System.out.println("Mennyi penzt kivan feltolteni?");
-                int amount = in.nextInt();
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            default:
-                break;
-        }
-
-
 
     }
 
@@ -476,5 +426,38 @@ public class Bank {
     public String getBankName() {
         return bankName;
     }
+
+    public void separator(){
+        System.out.println("\n- - - - - - - - - - - - - - - - - - - - - - - - \n");
+    }
+
+    public void bankLoop(){
+        boolean run  = true;
+        Scanner in = new Scanner(System.in);
+        while(run) {
+
+            this.updateMemoryFromDataBase("banksy.txt","banksy_accounts.txt", "banksy_users.txt", "temporary.txt");
+
+            System.out.println("Menü:\n\t1 - uj fiok\n\t2 - bejelentkezés\n\t3 - listázás\n\t4 - Leállítás");
+
+            switch (in.next()) {
+
+
+                case "1": this.createNewUser();break;
+                case "2": separator(); System.out.println("Ez még nincs kész sicc");  separator(); break; // login
+                case "3": separator(); System.out.println("Az összes felhasználó neve");  this.listAllUserName(); separator(); break;
+                case "4": separator(); System.out.println("LEÁLLÍTÁS...."); run=false; break;
+                default: System.out.println("Nem értelmezhető input. Kérlek próbáld újra!"); break;
+
+            }
+
+            this.updateDataBaseFromMemory("banksy.txt","banksy_accounts.txt", "banksy_users.txt", "temporary.txt");
+        }
+    }
+
+
+
+
+
 
 }

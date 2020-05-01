@@ -6,24 +6,13 @@ import java.util.Scanner;
 
 public class User{
 
-    public User(int _userId, String _userName, String _userPassword, String _year, String _mounth, String _day, String _where){
+    public User(int _userId, String _userName, String _userPassword, String _year, String _mounth, String _day, String _where, int _userAccountNumber){
 
         this.setUserId(_userId);
         this.setUserName(_userName);
         this.setUserPassword(_userPassword);
-
-
-
         this.setUserBirthInformation(_year,_mounth,_day,_where);
-
-        System.out.println("User létrehozva: " + "\n  ID: " + this.getUserId() + "\n   User Name: " + this.getUserName() + "\n    Password: " + this.getUserPassword());
-
-        //default userAccount
-
-
-
-
-
+        this.setUserAccountsNumber(_userAccountNumber);
     }
 
     ArrayList<Account> userAccounts = new ArrayList<Account>(); // en sem tudom
@@ -36,6 +25,7 @@ public class User{
 
 
     public void createNewAccount(int accountsNumber){
+
 
     }
 

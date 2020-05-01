@@ -20,38 +20,7 @@ public class Main {
 
         Bank Banksy = new Bank("Banksy");
 
-
-
-
-        while(running) {
-
-            Banksy.updateMemoryFromDataBase("banksy.txt","banksy_accounts.txt", "banksy_users.txt", "temporary.txt");
-            separator();
-            System.out.println("Üdvözöllek a Banksy Fiktív Bank felhasználói felületén.");
-            separator();
-            System.out.println("Kérlek válassz az alábbi lehetőségek közül");
-            separator();
-            System.out.println("\t1 - Új felhasználó regisztráció\n\t2 - Bejelentkezés a fiókba\n\t3 - Összes felhasználó neve\n\t4 - Leállítás");
-
-            System.out.println("\nUsers number from memory after clone from db:" + Banksy.getUsersNumber());
-
-            Scanner input = new Scanner(System.in);
-            userchoice = input.nextInt();
-
-            switch (userchoice) {
-
-
-                case 1: Banksy.createNewUser();break;
-
-                case 2: separator(); System.out.println("Ez még nincs kész sicc");  separator(); break;
-                case 3: separator(); System.out.println("Az összes felhasználó neve");  Banksy.listAllUserName(); separator(); break;
-                case 4: separator(); System.out.println("LEÁLLÍTÁS...."); running=false; break;
-                default: System.out.println("Nem értelmezhető input. Kérlek próbáld újra!"); break;
-
-            }
-            // update database from memory
-            Banksy.updateDataBaseFromMemory("banksy.txt","banksy_accounts.txt", "banksy_users.txt", "temporary.txt");
-        }
+        Banksy.bankLoop();
 
     }
 }
