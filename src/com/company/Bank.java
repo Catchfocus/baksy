@@ -115,7 +115,7 @@ public class Bank {
                 fromdb.setUserAccountsNumber(_accountsnumber);
 
 
-
+/*
                 for (int j = 0; j<this.getAccountsNumber(); i++) {
 
                     //account
@@ -144,6 +144,8 @@ public class Bank {
                         }
                     }
                 }
+
+ */
                 this.getUsers().add(fromdb);
             }
 
