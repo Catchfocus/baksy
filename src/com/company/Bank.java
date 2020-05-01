@@ -35,6 +35,7 @@ public class Bank {
             File temporaryFile = new File("temporary.txt");
 
             //write
+
             // core a végén
             BufferedWriter writeAccount = new BufferedWriter(new FileWriter(accountsfile.getAbsoluteFile(),true));
             BufferedWriter writeUsers = new BufferedWriter(new FileWriter(usersfile.getAbsoluteFile(),true));
@@ -55,6 +56,8 @@ public class Bank {
             // ACCOUNT: ID USERID Vezeteknev Keresztnev folyoszamlajelszo balance valuta
             // BANK: 0 <-- user
             //       0 <-- account
+
+
 
             int usersNumberFromdb = Integer.parseInt(readCore.readLine());
             int accountsNumberFromdb = Integer.parseInt(readCore.readLine());
@@ -79,16 +82,16 @@ public class Bank {
 
             }
 
-            System.out.println("Before users for: ");
+
 
             for(int i=0; i<this.getUsersNumber(); i++){
 
                 // user
-                System.out.println("1");
+
                 String userData = readUsers.readLine(); // itt ugrani fog a kovi cikluusban
-                System.out.println("2");
+
                 String[] splittedUserData = userData.split("\\s+"); // ezt hogy szeretned?
-                System.out.println("3");
+
 
                 int _id = Integer.parseInt(splittedUserData[0]);
 
@@ -115,12 +118,16 @@ public class Bank {
 
                 for (int j = 0; j<this.getAccountsNumber(); i++) {
 
+                    //account
+
                     System.out.println("7 in account for cycle");
 
                     if(!(fromdb.getUserAccountsNumber()==fromdb.getUserAccounts().size())){
 
                         System.out.println("8 in first if");
-                        if(Integer.parseInt(accountslist[j][1])==fromdb.getUserId()) {
+                        int accountsUserId = Integer.parseInt(accountslist[j][2]);
+
+                        if(accountsUserId==fromdb.getUserId()) {
                             System.out.println("9 in second if");
                             // ACCOUNT: ID USERID Katica Csenge folyoszamlajelszo balance valuta
 
@@ -136,8 +143,6 @@ public class Bank {
                             fromdb.getUserAccounts().add(fromdbAccount);
                         }
                     }
-
-                    this.getUsers().add(fromdb);
                 }
                 this.getUsers().add(fromdb);
             }
@@ -305,7 +310,7 @@ public class Bank {
         System.out.println("Accounts: " + this.getAccountsNumber());
 
             String userData =
-                    String.format("%d %s %s %s %s %s %d",
+                    String.format("%d %s %s %s %s %s %s %d",
                             newUser.getUserId(),
                             newUser.getUserName(),
                             newUser.getUserPassword(),

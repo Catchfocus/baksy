@@ -24,6 +24,7 @@ public class Main {
 
 
         while(running) {
+
             Banksy.updateMemoryFromDataBase("banksy.txt","banksy_accounts.txt", "banksy_users.txt", "temporary.txt");
             separator();
             System.out.println("Üdvözöllek a Banksy Fiktív Bank felhasználói felületén.");
@@ -47,6 +48,7 @@ public class Main {
                 default: System.out.println("Nem értelmezhető input. Kérlek próbáld újra!");
 
             }
+            // update database from memory
         }
 
     }

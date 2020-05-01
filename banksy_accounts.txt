@@ -6,6 +6,5 @@
 6 2 dwq dwq dwq -200 HUF
 7 3 dwq dwq dwq -400 HUF
 8 4 Futó Mirkó 12345 999999999 HUF
-9 8 Kanalas Gép 12345 0 EUR
-
-
+9 8 Kanalas Gém 12345 0 EUR
+10 9 Szűcs Bendegúz 12jörj912 13124 CDN
