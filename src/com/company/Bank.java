@@ -177,7 +177,7 @@ public class Bank {
 
             //write
             // core a végén
-            //BufferedWriter writeAccount = new BufferedWriter(new FileWriter(accountsfile.getAbsoluteFile()));
+            BufferedWriter writeAccount = new BufferedWriter(new FileWriter(accountsfile.getAbsoluteFile()));
             BufferedWriter writeUsers = new BufferedWriter(new FileWriter(usersfile.getAbsoluteFile(),true));
             BufferedWriter writeTemporary = new BufferedWriter(new FileWriter(temporaryFile.getAbsoluteFile(),true));
 
@@ -188,7 +188,7 @@ public class Bank {
             BufferedReader readUsers = new BufferedReader(new FileReader(usersfile.getAbsoluteFile()));
             BufferedReader readTemporary = new BufferedReader(new FileReader(temporaryFile.getAbsoluteFile()));
 
-          //  writeAccount.flush();
+            writeAccount.flush();
             writeUsers.flush();
             writeTemporary.flush();
             // update
@@ -211,13 +211,10 @@ public class Bank {
                 String _accountnumber = String.valueOf(this.getUsers().get(i).getUserAccountsNumber());
 
                 String line = String.join(" ",_id,_name,_password,_year,_mounth,_day,_where,_accountnumber);
-                if(line.equals(readUsers.readLine())){
-                    writeUsers.newLine();
-                }else{
-                    writeUsers.write(line);
-                    writeUsers.newLine();
-                }
 
+                if(!(line.equals(readUsers.readLine()))){
+                    writeUsers.write(line);
+                }
             }
 
 
@@ -232,9 +229,9 @@ public class Bank {
 
             BufferedWriter writeCore = new BufferedWriter(new FileWriter(corefile.getAbsoluteFile()));
             writeCore.flush();
-            writeCore.write(this.getUsersNumber());
+            writeCore.write(String.valueOf(this.getUsersNumber()));
             writeCore.newLine();
-            writeCore.write(this.getAccountsNumber());
+            writeCore.write(String.valueOf(this.getAccountsNumber()));
 
 
 
@@ -245,11 +242,11 @@ public class Bank {
             readTemporary.close();
 
             writeCore.close();
-            //writeAccount.close();
+            writeAccount.close();
             writeUsers.close();
             writeTemporary.close();
 
-            this.getUsers().removeAll(this.getUsers());
+            this.getUsers().clear();
             this.setAccountsNumber(0);
             this.setUsersNumber(0);
 
