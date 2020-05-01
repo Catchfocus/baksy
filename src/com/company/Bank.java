@@ -37,9 +37,9 @@ public class Bank {
             //write
 
             // core a végén
-            BufferedWriter writeAccount = new BufferedWriter(new FileWriter(accountsfile.getAbsoluteFile(),true));
-            BufferedWriter writeUsers = new BufferedWriter(new FileWriter(usersfile.getAbsoluteFile(),true));
-            BufferedWriter writeTemporary = new BufferedWriter(new FileWriter(temporaryFile.getAbsoluteFile()));
+             BufferedWriter writeAccount = new BufferedWriter(new FileWriter(accountsfile.getAbsoluteFile(),true));
+             BufferedWriter writeUsers = new BufferedWriter(new FileWriter(usersfile.getAbsoluteFile(),true));
+             BufferedWriter writeTemporary = new BufferedWriter(new FileWriter(temporaryFile.getAbsoluteFile()));
 
             //read
 
@@ -63,24 +63,14 @@ public class Bank {
             int accountsNumberFromdb = Integer.parseInt(readCore.readLine());
 
 
-            System.out.println("users and account from memory: "+usersNumberFromdb + " " + accountsNumberFromdb);
+
 
             this.setUsersNumber(usersNumberFromdb);
             this.setAccountsNumber(accountsNumberFromdb);
 
-            System.out.println("users and account set in db: "+ this.getUsersNumber()+" "+ this.getAccountsNumber());
-
-            String[][] accountslist = new String[this.getAccountsNumber()][];
-
-            System.out.println("Before accountlist for : " + accountslist);
-
-            for(int i=0; i<this.getAccountsNumber(); i++){
-                String accountData = readAccounts.readLine();
-                String[] splittedAccountData = accountData.split("\\s+");
-                accountslist[i] = splittedAccountData;
 
 
-            }
+
 
 
 
@@ -111,41 +101,35 @@ public class Bank {
 
 
                 User fromdb = new User(_id,_name,_password,_year,_mounth,_day,_where);
-
                 fromdb.setUserAccountsNumber(_accountsnumber);
 
 
+                String[] accounts = new String[]{};
+
+
 /*
-                for (int j = 0; j<this.getAccountsNumber(); i++) {
+                for(int j=0; i<this.getAccountsNumber(); i++){
+                    String accountData = readAccounts.readLine();
+                    accounts = accountData.split("\\s+");
 
-                    //account
+                    if(String.valueOf(fromdb.getUserId()).equals(accounts[1])){
 
-                    System.out.println("7 in account for cycle");
-
-                    if(!(fromdb.getUserAccountsNumber()==fromdb.getUserAccounts().size())){
-
-                        System.out.println("8 in first if");
-                        int accountsUserId = Integer.parseInt(accountslist[j][2]);
-
-                        if(accountsUserId==fromdb.getUserId()) {
-                            System.out.println("9 in second if");
-                            // ACCOUNT: ID USERID Katica Csenge folyoszamlajelszo balance valuta
-
-                            int _accountId = Integer.parseInt(accountslist[j][0]);
-                            int _ownerId = Integer.parseInt(accountslist[j][1]);
-                            String _ownername = accountslist[j][2] + " " + accountslist[j][3];
-                            String _accountpassword = accountslist[j][4];
-                            int _balance = Integer.parseInt(accountslist[j][5]);
-                            String _valuta = accountslist[j][6];
+                        int _accountId = Integer.parseInt(accounts[0]);
+                        int _ownerId = Integer.parseInt(accounts[1]);
+                        String _ownername = accounts[2] + " " + accounts[3];
+                        String _accountpassword = accounts[4];
+                        int _balance = Integer.parseInt(accounts[5]);
+                        String _valuta = accounts[6];
 
 
-                            Account fromdbAccount = new Account(_accountId, _ownerId, _ownername, _accountpassword, _balance, _valuta);
-                            fromdb.getUserAccounts().add(fromdbAccount);
-                        }
+                        Account fromdbAccount = new Account(_accountId, _ownerId, _ownername, _accountpassword, _balance, _valuta);
+                        fromdb.getUserAccounts().add(fromdbAccount);
                     }
                 }
 
  */
+
+
                 this.getUsers().add(fromdb);
             }
 
@@ -157,7 +141,12 @@ public class Bank {
 
 
             // legvégén kell lennie mert ebben összesítés van, és mindig törli az előzőt
-            BufferedWriter writeCore = new BufferedWriter(new FileWriter(accountsfile.getAbsoluteFile()));
+          /*  BufferedWriter writeCore = new BufferedWriter(new FileWriter(corefile.getAbsoluteFile()));
+            writeCore.write(this.getUsersNumber());
+            writeCore.newLine();
+            writeCore.write(this.getAccountsNumber());
+
+           */
 
 
             readCore.close();
@@ -165,10 +154,10 @@ public class Bank {
             readUsers.close();
             readTemporary.close();
 
-            writeCore.close();
-            writeAccount.close();
-            writeUsers.close();
-            writeTemporary.close();
+          // writeCore.close();
+           writeAccount.close();
+           writeUsers.close();
+           writeTemporary.close();
 
 
         }catch(Exception e){
