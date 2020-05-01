@@ -1,7 +1,7 @@
 banksy.txt
 -----------------------
-16
-16
+19
+19
 -----------------------
 banksy_users.txt
 -----------------------
@@ -21,6 +21,9 @@ banksy_users.txt
 14 Lakatos Kálmánbáttya trümó 1929 3 8 Kukutyin 1
 15 Kanalas Rodrigez fokume 2009 12 12 Gyöngyös 1
 16 Tóth Attila minecraft 1950 1 1 Ittésmost 1
+17 Galambos Gábor supervisor 1920 2 2 Matrix 1
+18 Kóródi Attila ooppá 1990 9 9 Szeged 1
+19 Gazsi Karcsi 123fg4j 1993 12 5 Hetven 0
 ------------------------
 banksy_accounts.txt
 ------------------------

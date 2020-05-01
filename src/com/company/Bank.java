@@ -117,16 +117,16 @@ public class Bank {
                         String _ownername = accounts[2] + " " + accounts[3];
                         String _accountpassword = accounts[4];
                         int _balance = Integer.parseInt(accounts[5]);
-                        String _valuta = accounts[6];
+                        String _currency = accounts[6];
 
 
-                        Account fromdbAccount = new Account(_accountId, _ownerId, _ownername, _accountpassword, _balance, _valuta);
+                        Account fromdbAccount = new Account(_accountId,_ownerId,_ownername,_password,_balance,_currency);
                         fromdb.getUserAccounts().add(fromdbAccount);
                     }
                 }
 
- */
 
+ */
 
                 this.getUsers().add(fromdb);
             }
@@ -269,14 +269,14 @@ public class Bank {
             File corefile = new File("banksy.txt");
             File accountsfile = new File("banksy_accounts.txt");
             File usersfile = new File("banksy_users.txt");
-            File temporaryFile = new File("temporary.txt");
+
 
             //write
 
 
             FileWriter wAccounts = new FileWriter(accountsfile.getAbsoluteFile(),true);
             FileWriter wUsers = new FileWriter(usersfile.getAbsoluteFile(),true);
-            FileWriter wTemporary = new FileWriter(temporaryFile.getAbsoluteFile());
+
 
 
             BufferedWriter writeAccount = new BufferedWriter(wAccounts);
@@ -285,12 +285,10 @@ public class Bank {
             //read
 
             FileReader rCore = new FileReader(corefile.getAbsoluteFile());
-            FileReader rAccounts = new FileReader(accountsfile.getAbsoluteFile());
-            FileReader rUsers = new FileReader(usersfile.getAbsoluteFile());
+
 
             BufferedReader readCore = new BufferedReader(rCore);
-            BufferedReader readAccounts = new BufferedReader(rAccounts);
-            BufferedReader readUsers = new BufferedReader(rUsers);
+
 
 
 
@@ -320,12 +318,12 @@ public class Bank {
             String w = in.next();
 
         String name = forname+" "+surename;
-        this.addUsersNumber(1); // mintha lett volna benne vmi kodformazo funkci - ez noveli, igaz?
+        this.addUsersNumber(1);
 
 
 
 
-        // A get users numbert is, a banksy_users.txt hosszaval
+
         User newUser = new User(this.getUsersNumber(),name,pass,y,m,d,w,0);
         this.getUsers().add(newUser);
 
@@ -376,10 +374,60 @@ public class Bank {
     }
 
     public void logIn(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Bejelentkezés");
+        separator();
+        System.out.println("Kérem adja meg az azonosítóját és a jelszavát");
+        System.out.print("Azonosító: ");
+        int loginId = input.nextInt(); System.out.println("");
+        System.out.print("Jelszó: ");
+        String loginPass = input.next(); System.out.println("");
+
+        for (int i = 0; i<this.getUsers().size();i++){
+            if(this.getUsers().get(i).getUserId()==loginId && this.getUsers().get(i).getUserPassword()==loginPass){
+                System.out.println("Sikeres bejelentkezés...");
+                userInterface(this.getUsers().get(i));
+            }
+        }
 
     }
 
-    public void userInterface(User _user){
+    public void userInterface(User user){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Folyószámláid:");
+        for(int i=0; i<=user.getUserAccountsNumber(); i++){
+            System.out.println(user.getUserAccounts().get(i).getAccountId() + " azonosítójú folyószámla");
+        }
+        System.out.println("Válaszd ki melyik folyószámlán szeretnél ügyet intézni!");
+        System.out.print("Folyószámla azonosítója: ");
+        int accountID = input.nextInt();
+
+        for(int i=0; i<=user.getUserAccountsNumber();i++){
+            if(user.getUserAccounts().get(i).getAccountId()==accountID){
+                System.out.println(accountID+" azonosítójú számla kiválasztva");
+                accountInterface(user.getUserAccounts().get(i));
+            }
+        }
+
+
+        // listázza a jelenlegi folyószámlákat
+        //új folyószámla létrehozása
+        // folyószámlák közötti tranzakciók
+
+    }
+
+    public void accountInterface(Account account){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Kérlek válassz a következő lehetőségek közül.");
+
+        System.out.println("\t1 - Pénz befizetés\n\t2 - Pénz felvételí\n\t3 - Utalás");
+
+        switch(input.nextInt()){
+            case 1: System.out.println("Pénz befizetése"); break;
+            case 2: System.out.println("Pénz felvétele"); break;
+            case 3: System.out.println("Utalás"); break;
+        }
+
 
     }
 
@@ -444,7 +492,7 @@ public class Bank {
 
 
                 case "1": this.createNewUser();break;
-                case "2": separator(); System.out.println("Ez még nincs kész sicc");  separator(); break; // login
+                case "2": separator(); logIn(); separator(); break; // login
                 case "3": separator(); System.out.println("Az összes felhasználó neve");  this.listAllUserName(); separator(); break;
                 case "4": separator(); System.out.println("LEÁLLÍTÁS...."); run=false; break;
                 default: System.out.println("Nem értelmezhető input. Kérlek próbáld újra!"); break;

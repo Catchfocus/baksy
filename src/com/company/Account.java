@@ -2,7 +2,7 @@ package com.company;
 
 public class Account {
 
-    public Account(int _accountID, int _ownerId, String _accountOwner, String _accountPassword, int _accountBalance, String _account, String _accountCurrency) {
+    public Account(int _accountID, int _ownerId, String _accountOwner, String _accountPassword, int _accountBalance, String _accountCurrency) {
 
         this.setAccountId(_accountID);
         this.setOwnerId(_ownerId);
