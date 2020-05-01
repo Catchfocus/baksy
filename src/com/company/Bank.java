@@ -141,7 +141,7 @@ public class Bank {
 
 
             // legvégén kell lennie mert ebben összesítés van, és mindig törli az előzőt
-            BufferedWriter writeCore = new BufferedWriter(new FileWriter(corefile.getAbsoluteFile()));
+            BufferedWriter writeCore = new BufferedWriter(new FileWriter(corefile.getAbsoluteFile(),true));
             writeCore.flush();
             writeCore.write(this.getUsersNumber());
             writeCore.newLine();
@@ -177,9 +177,9 @@ public class Bank {
 
             //write
             // core a végén
-            BufferedWriter writeAccount = new BufferedWriter(new FileWriter(accountsfile.getAbsoluteFile(),true));
+            //BufferedWriter writeAccount = new BufferedWriter(new FileWriter(accountsfile.getAbsoluteFile()));
             BufferedWriter writeUsers = new BufferedWriter(new FileWriter(usersfile.getAbsoluteFile(),true));
-            BufferedWriter writeTemporary = new BufferedWriter(new FileWriter(temporaryFile.getAbsoluteFile()));
+            BufferedWriter writeTemporary = new BufferedWriter(new FileWriter(temporaryFile.getAbsoluteFile(),true));
 
             //read
 
@@ -188,10 +188,40 @@ public class Bank {
             BufferedReader readUsers = new BufferedReader(new FileReader(usersfile.getAbsoluteFile()));
             BufferedReader readTemporary = new BufferedReader(new FileReader(temporaryFile.getAbsoluteFile()));
 
-
+          //  writeAccount.flush();
+            writeUsers.flush();
+            writeTemporary.flush();
             // update
 
-            // Melyik fuggvenyhivas teszi el a usereket? -- ami mondjuk az elobb kijott itt
+            // LOG:TYPE USER1 USER1ACCOUMT1 USER2 USER2ACCOUNT1 USER1ACCOUNT1BALDIFF USER2ACCUNT1BALDIFF VALUTA  (utalás kati 1. folyójáról józsi 1. folyósára -3000 3000 HUF
+            // USER : ID Vezeteknev Keresztnev jelszo yyyy m dd where accountnumber
+            // ACCOUNT: ID USERID Vezeteknev Keresztnev folyoszamlajelszo balance valuta
+            // BANK: 0 <-- user
+            //       0 <-- account
+
+
+            for(int i=0; i<=this.getUsersNumber();i++){
+                String _id =String.valueOf(this.getUsers().get(i).getUserId());
+                String _name = this.getUsers().get(i).getUserName();
+                String _password = this.getUsers().get(i).getUserPassword();
+                String _year = this.getUsers().get(i).getUserBirthInformation()[0];
+                String _mounth = this.getUsers().get(i).getUserBirthInformation()[1];
+                String _day = this.getUsers().get(i).getUserBirthInformation()[2];
+                String _where = this.getUsers().get(i).getUserBirthInformation()[3];
+                String _accountnumber = String.valueOf(this.getUsers().get(i).getUserAccountsNumber());
+
+                String line = String.join(" ",_id,_name,_password,_year,_mounth,_day,_where,_accountnumber);
+                if(line.equals(readUsers.readLine())){
+                    writeUsers.newLine();
+                }else{
+                    writeUsers.write(line);
+                    writeUsers.newLine();
+                }
+
+            }
+
+
+
 
 
 
@@ -199,7 +229,14 @@ public class Bank {
 
 
             // legvégén kell lennie mert ebben összesítés van, és mindig törli az előzőt
-            BufferedWriter writeCore = new BufferedWriter(new FileWriter(accountsfile.getAbsoluteFile()));
+
+            BufferedWriter writeCore = new BufferedWriter(new FileWriter(corefile.getAbsoluteFile()));
+            writeCore.flush();
+            writeCore.write(this.getUsersNumber());
+            writeCore.newLine();
+            writeCore.write(this.getAccountsNumber());
+
+
 
 
             readCore.close();
@@ -208,9 +245,13 @@ public class Bank {
             readTemporary.close();
 
             writeCore.close();
-            writeAccount.close();
+            //writeAccount.close();
             writeUsers.close();
             writeTemporary.close();
+
+            this.getUsers().removeAll(this.getUsers());
+            this.setAccountsNumber(0);
+            this.setUsersNumber(0);
 
 
         }catch(Exception e){

@@ -40,15 +40,17 @@ public class Main {
 
             switch (userchoice) {
 
+
                 case 1: Banksy.createNewUser();break;
 
-                case 2: separator(); System.out.println("Ez még nincs kész sicc"); Banksy.login(); separator(); break;
-                case 3: separator(); System.out.println("Az összes felhasználó neve"); separator(); Banksy.listAllUserName(); separator(); break;
+                case 2: separator(); System.out.println("Ez még nincs kész sicc");  separator(); break;
+                case 3: separator(); System.out.println("Az összes felhasználó neve");  Banksy.listAllUserName(); separator(); break;
 
                 default: System.out.println("Nem értelmezhető input. Kérlek próbáld újra!");
 
             }
             // update database from memory
+            Banksy.updateDataBaseFromMemory("banksy.txt","banksy_accounts.txt", "banksy_users.txt", "temporary.txt");
         }
 
     }
