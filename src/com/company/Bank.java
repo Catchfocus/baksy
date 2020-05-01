@@ -20,7 +20,7 @@ public class Bank {
     private int accountsNumber = 0;
 
     public void listAllUserName(){
-        for (int i=0; i<=this.getUsersNumber(); i++) {
+        for (int i=0; i<this.getUsersNumber(); i++) {
             System.out.println(this.getUsers().get(i).getUserName());
         }
     }
@@ -52,45 +52,76 @@ public class Bank {
 
             // LOG:TYPE USER1 USER1ACCOUMT1 USER2 USER2ACCOUNT1 USER1ACCOUNT1BALDIFF USER2ACCUNT1BALDIFF VALUTA  (utalás kati 1. folyójáról józsi 1. folyósára -3000 3000 HUF
             // USER : ID Vezeteknev Keresztnev jelszo yyyy m dd where
-            // ACCOUNT: ID USERID Katica Csenge folyoszamlajelszo balance valuta
+            // ACCOUNT: ID USERID Vezeteknev Keresztnev folyoszamlajelszo balance valuta
             // BANK: 0 <-- user
             //       0 <-- account
 
-            this.setUsersNumber(Integer.parseInt(readCore.readLine()));
-            this.setAccountsNumber(Integer.parseInt(readCore.readLine()));
+            int usersNumberFromdb = Integer.parseInt(readCore.readLine());
+            int accountsNumberFromdb = Integer.parseInt(readCore.readLine());
 
-            String[][] accountslist = new String[][]{};
+
+            System.out.println("users and account from memory: "+usersNumberFromdb + " " + accountsNumberFromdb);
+
+            this.setUsersNumber(usersNumberFromdb);
+            this.setAccountsNumber(accountsNumberFromdb);
+
+            System.out.println("users and account set in db: "+ this.getUsersNumber()+" "+ this.getAccountsNumber());
+
+            String[][] accountslist = new String[this.getAccountsNumber()][];
+
+            System.out.println("Before accountlist for : " + accountslist);
 
             for(int i=0; i<this.getAccountsNumber(); i++){
                 String accountData = readAccounts.readLine();
-                accountslist[i] = accountData.split("\\s+");
+                String[] splittedAccountData = accountData.split("\\s+");
+                accountslist[i] = splittedAccountData;
+
+
             }
+
+            System.out.println("Before users for: ");
 
             for(int i=0; i<this.getUsersNumber(); i++){
 
                 // user
+                System.out.println("1");
                 String userData = readUsers.readLine(); // itt ugrani fog a kovi cikluusban
+                System.out.println("2");
                 String[] splittedUserData = userData.split("\\s+"); // ezt hogy szeretned?
+                System.out.println("3");
 
                 int _id = Integer.parseInt(splittedUserData[0]);
-                String _name = splittedUserData[1]+" "+splittedUserData[2];
+
+                String _name = String.join(" " ,splittedUserData[1],splittedUserData[2]);
+
                 String _password = splittedUserData[3];
+
                 String _year = splittedUserData[4];
+
                 String _mounth = splittedUserData[5];
+
                 String _day = splittedUserData[6];
                 String _where = splittedUserData[7];
                 int _accountsnumber = Integer.parseInt(splittedUserData[8]);
+                System.out.println("_accountsnumber: " + _accountsnumber);
+
 
 
                 User fromdb = new User(_id,_name,_password,_year,_mounth,_day,_where);
+
                 fromdb.setUserAccountsNumber(_accountsnumber);
 
 
 
-                for (int j = 0; j<this.getAccountsNumber(); i++) {// Account egyelore nem lattam hibasnak tuno reszt, nagyon kiraly :)
-                    if(!(fromdb.getUserAccountsNumber()==fromdb.getUserAccounts().size())){ // gondolkozok rajta :D
-                        if(Integer.parseInt(accountslist[j][1])==fromdb.getUserId()) {
+                for (int j = 0; j<this.getAccountsNumber(); i++) {
 
+                    System.out.println("7 in account for cycle");
+
+                    if(!(fromdb.getUserAccountsNumber()==fromdb.getUserAccounts().size())){
+
+                        System.out.println("8 in first if");
+                        if(Integer.parseInt(accountslist[j][1])==fromdb.getUserId()) {
+                            System.out.println("9 in second if");
                             // ACCOUNT: ID USERID Katica Csenge folyoszamlajelszo balance valuta
 
                             int _accountId = Integer.parseInt(accountslist[j][0]);
@@ -281,6 +312,7 @@ public class Bank {
                             newUser.getUserBirthInformation()[0],
                             newUser.getUserBirthInformation()[1],
                             newUser.getUserBirthInformation()[2],
+                            newUser.getUserBirthInformation()[3],
                             newUser.getUserAccountsNumber());
 
             System.out.println(userData);

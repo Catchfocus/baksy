@@ -32,6 +32,8 @@ public class Main {
             separator();
             System.out.println("\t1 - Új felhasználó regisztráció\n\t2 - Bejelentkezés a fiókba\n\t3 - Összes felhasználó neve");
 
+            System.out.println("\nUsers number from memory after clone from db:" + Banksy.getUsers().size());
+
             Scanner input = new Scanner(System.in);
             userchoice = input.nextInt();
 
