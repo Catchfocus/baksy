@@ -141,12 +141,13 @@ public class Bank {
 
 
             // legvégén kell lennie mert ebben összesítés van, és mindig törli az előzőt
-          /*  BufferedWriter writeCore = new BufferedWriter(new FileWriter(corefile.getAbsoluteFile()));
+            BufferedWriter writeCore = new BufferedWriter(new FileWriter(corefile.getAbsoluteFile()));
+            writeCore.flush();
             writeCore.write(this.getUsersNumber());
             writeCore.newLine();
             writeCore.write(this.getAccountsNumber());
 
-           */
+
 
 
             readCore.close();
@@ -235,7 +236,7 @@ public class Bank {
             FileWriter wAccounts = new FileWriter(accountsfile.getAbsoluteFile(),true);
             FileWriter wUsers = new FileWriter(usersfile.getAbsoluteFile(),true);
             FileWriter wTemporary = new FileWriter(temporaryFile.getAbsoluteFile());
-            // Eloszor megirjuk a frissito interface-t, vagy csinaljuk meg a logikat?
+
 
             BufferedWriter writeAccount = new BufferedWriter(wAccounts);
             BufferedWriter writeUsers = new BufferedWriter(wUsers);
