@@ -27,17 +27,23 @@ banksy_users.txt
 ------------------------
 banksy_accounts.txt
 ------------------------
-1 1 12313 123 1231 2312 HUF
-2 2 dwq dwq dwq 312 HUF
-3 3 dwq dwq dwq 312 HUF
-4 4 Futó Mirkó 1234 312 HUF
-5 5 Kovacs Istva'n 1234 312 HUF
-6 6 Kukaorica Janos janos32 312 HUF
-7 7 Katica Csenge jelszo 1999 312 HUF
-8 8 Kanalas Gém réz 312 HUF
-9 9 Szűcs Bendegúz 32jf239ögj32ö9k 312 HUF
-10 Veisz Áron azunikreditbe 312 HUF
-11 Papp Károly avállalkozó 312 HUF
-12 Dékány Lilla mari 312 HUF
-13 Csanád Pisti asd 312 HUF
+1 1 Futó Mirkó 1234 123124 HUF
+2 2 Kovacs Istva'n 1234 123124 HUF
+3 3 Kukaorica Janos 1234 123124 HUF
+4 4 Katica Csenge 1234 123124 HUF
+5 5 Kanalas Gém 1234 123124 HUF
+6 6 Szűcs Bendegúz 1234 123124 HUF
+7 7 Veisz Áron 1234 123124 HUF
+8 8 Papp Károly 1234 123124 HUF
+9 9 Dékány Lilla 1234 123124 HUF
+10 10 Csanád Pisti 1234 123124 HUF
+11 11 Balázs Mátéj 1234 123124 HUF
+12 12 Bakos Kence 1234 123124 HUF
+13 13 Zeisler Milán 1234 123124 HUF
+14 14 Lakatos Kálmánbáttya 1234 123124 HUF
+15 15 Kanalas Rodrigez fokume 1234 123124 HUF
+16 16 Tóth Attila 1234 123124 HUF
+17 17 Galambos Gábor 1234 123124 HUF
+18 18 Kóródi Attila 1234 123124 HUF
+19 19 Gazsi Karcsi 1234 123124 HUF
 --------------------------

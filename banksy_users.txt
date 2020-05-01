@@ -17,3 +17,4 @@
 17 Galambos Gábor supervisor 1920 2 2 Matrix 1
 18 Kóródi Attila ooppá 1990 9 9 Szeged 1
 19 Gazsi Karcsi 123fg4j 1993 12 5 Hetven 0
+20 Szent Kleofás 1234 1997 8 15 Baja 0

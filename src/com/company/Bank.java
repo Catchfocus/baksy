@@ -19,9 +19,10 @@ public class Bank {
     private int usersNumber= 0;
     private int accountsNumber = 0;
 
-    public void listAllUserName(){
-        for (int i=0; i<this.getUsersNumber(); i++) {
+    public void listAllUserNameAndAccount(){
+        for (int i=0; i<=this.getUsersNumber(); i++) {
             System.out.println(this.getUsers().get(i).getUserName());
+            System.out.println(this.getUsers().get(i).getUserAccounts().size());
         }
     }
 
@@ -104,11 +105,17 @@ public class Bank {
 
                 String[] accounts = new String[]{};
 
+                this.getUsers().add(fromdb);
 
 /*
-                for(int j=0; i<this.getAccountsNumber(); i++){
+
+                for(int j=0; j<this.getAccountsNumber(); j++){
                     String accountData = readAccounts.readLine();
                     accounts = accountData.split("\\s+");
+
+                    for (String item : accounts){
+                        System.out.print(item+",");
+                    }
 
                     if(String.valueOf(fromdb.getUserId()).equals(accounts[1])){
 
@@ -119,16 +126,15 @@ public class Bank {
                         int _balance = Integer.parseInt(accounts[5]);
                         String _currency = accounts[6];
 
-
                         Account fromdbAccount = new Account(_accountId,_ownerId,_ownername,_password,_balance,_currency);
                         fromdb.getUserAccounts().add(fromdbAccount);
                     }
                 }
 
-
  */
 
-                this.getUsers().add(fromdb);
+
+
             }
 
 
@@ -260,6 +266,8 @@ public class Bank {
 
     }
 
+
+
     public void createNewUser(){
 
         try {
@@ -327,7 +335,7 @@ public class Bank {
         User newUser = new User(this.getUsersNumber(),name,pass,y,m,d,w,0);
         this.getUsers().add(newUser);
 
-        newUser.createNewAccount(this.getAccountsNumber());
+        newUser.getUserAccounts().add(newUser.createNewAccount(this.getAccountsNumber()));
         this.addAccountsNumber(1);
 
 
@@ -384,9 +392,12 @@ public class Bank {
         String loginPass = input.next(); System.out.println("");
 
         for (int i = 0; i<this.getUsers().size();i++){
-            if(this.getUsers().get(i).getUserId()==loginId && this.getUsers().get(i).getUserPassword()==loginPass){
-                System.out.println("Sikeres bejelentkezés...");
-                userInterface(this.getUsers().get(i));
+
+            if(this.getUsers().get(i).getUserId()==loginId && this.getUsers().get(i).getUserPassword().equals(loginPass)){
+
+                    System.out.println("Sikeres bejelentkezés...");
+                    System.out.println(this.getUsers().get(i).getUserId());
+                    userInterface(this.getUsers().get(i));
             }
         }
 
@@ -395,7 +406,7 @@ public class Bank {
     public void userInterface(User user){
         Scanner input = new Scanner(System.in);
         System.out.println("Folyószámláid:");
-        for(int i=0; i<=user.getUserAccountsNumber(); i++){
+        for(int i=0; i<user.getUserAccountsNumber(); i++){
             System.out.println(user.getUserAccounts().get(i).getAccountId() + " azonosítójú folyószámla");
         }
         System.out.println("Válaszd ki melyik folyószámlán szeretnél ügyet intézni!");
@@ -418,6 +429,7 @@ public class Bank {
 
     public void accountInterface(Account account){
         Scanner input = new Scanner(System.in);
+
         System.out.println("Kérlek válassz a következő lehetőségek közül.");
 
         System.out.println("\t1 - Pénz befizetés\n\t2 - Pénz felvételí\n\t3 - Utalás");
@@ -476,7 +488,7 @@ public class Bank {
     }
 
     public void separator(){
-        System.out.println("\n- - - - - - - - - - - - - - - - - - - - - - - - \n");
+        System.out.print("\n=== === === === === === === === === === === === === === === === === ===\n ");
     }
 
     public void bankLoop(){
@@ -493,7 +505,7 @@ public class Bank {
 
                 case "1": this.createNewUser();break;
                 case "2": separator(); logIn(); separator(); break; // login
-                case "3": separator(); System.out.println("Az összes felhasználó neve");  this.listAllUserName(); separator(); break;
+                case "3": separator(); System.out.println("Az összes felhasználó neve");  this.listAllUserNameAndAccount(); separator(); break;
                 case "4": separator(); System.out.println("LEÁLLÍTÁS...."); run=false; break;
                 default: System.out.println("Nem értelmezhető input. Kérlek próbáld újra!"); break;
 

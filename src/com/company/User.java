@@ -24,8 +24,21 @@ public class User{
 
 
 
-    public void createNewAccount(int accountsNumber){
+    public Account createNewAccount(int accountsNumber){
 
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Új folyószámla létrehozása");
+        System.out.println("Kélrke add meg a folyószámla jelszavát, nyitó valutáját");
+        System.out.print("Folyószámla jelszó: ");
+        String pass = input.next();
+        System.out.println("\nNyitó valuta (HUF/USD/EUR) : ");
+        String currency = input.next();
+
+        Account newAccount = new Account(accountsNumber,this.getUserId(),this.getUserName(),pass,0,currency);
+        System.out.println(newAccount.getAccountId()+ " azonosítóju folyószámla létrehozva.");
+
+        return newAccount;
 
     }
 
